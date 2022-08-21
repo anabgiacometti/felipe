@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:testing/main.dart';
 import 'package:testing/utils/style.dart';
+import 'package:testing/utils/validators.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -12,6 +13,25 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  String? get _errorText {
+    final text = emailController.value.text;
+    if (text.isEmpty) {
+      return 'Can\'t be empty';
+    }
+    if (text.length < 4) {
+      return 'Too short';
+    }
+    // return null if the text is valid
+    return null;
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +52,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 TextFormField(
                   cursorHeight: 22,
                   controller: emailController,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (String? value) {
+                    return Validators.oneOf(
+                        [Validators.requiredField, Validators.emailField],
+                        value);
+                  },
                   style: const TextStyle(
                       fontWeight: FontWeight.w200, letterSpacing: 2),
                   keyboardType: TextInputType.emailAddress,
@@ -46,6 +72,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 TextFormField(
                   cursorHeight: 22,
                   controller: passwordController,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (String? value) {
+                    return (value != null && value.isEmpty)
+                        ? 'Por favor, preencha a senha.'
+                        : null;
+                  },
                   style: const TextStyle(
                       fontWeight: FontWeight.w200, letterSpacing: 2),
                   autocorrect: false,
