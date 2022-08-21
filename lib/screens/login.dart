@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:testing/main.dart';
 import 'package:testing/utils/style.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -8,10 +9,6 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-const Text loginText = Text("Login",
-    style: TextStyle(
-        fontSize: 36.0, fontWeight: FontWeight.w300, color: Colors.indigo));
-
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -19,17 +16,24 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
+        top: false,
+        minimum: const EdgeInsets.symmetric(horizontal: 32, vertical: 32),
         child: Center(
-          child: ListView(
-              shrinkWrap: true,
-              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 48),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                loginText,
+                Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text("Login",
+                        style: Theme.of(context).textTheme.headline1)),
                 Spacing.veryLarge,
                 TextFormField(
+                  cursorHeight: 22,
                   controller: emailController,
-                  style: const TextStyle(fontWeight: FontWeight.w200),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w200, letterSpacing: 2),
                   keyboardType: TextInputType.emailAddress,
                   decoration: const InputDecoration(
                       suffixIcon: Icon(Icons.person), labelText: 'E-mail'),
@@ -40,8 +44,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 Spacing.small,
                 TextFormField(
+                  cursorHeight: 22,
                   controller: passwordController,
-                  style: const TextStyle(fontWeight: FontWeight.w200),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w200, letterSpacing: 2),
                   autocorrect: false,
                   obscureText: true,
                   decoration: const InputDecoration(
@@ -51,10 +57,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 TextButton(
                     onPressed: () {},
                     style: TextButton.styleFrom(alignment: Alignment.center),
-                    child: const Text("Esqueceu a senha?",
-                        style: TextStyle(
-                            color: Colors.black38,
-                            fontWeight: FontWeight.w300))),
+                    child: Text("Esqueceu a senha?",
+                        style: Theme.of(context).textTheme.bodyText1)),
                 Spacing.tiny,
                 ElevatedButton.icon(
                   icon: const Icon(Icons.arrow_right_alt),
@@ -67,15 +71,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   label: const Text("LOGIN"),
                 ),
                 Spacing.medium,
-                Row(children: const <Widget>[
-                  Expanded(child: Divider()),
+                Row(children: <Widget>[
+                  const Expanded(child: Divider()),
                   Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 12),
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
                       child: Text(
                         "OU",
-                        style: TextStyle(color: Colors.black38),
+                        style: Theme.of(context).textTheme.bodyText1,
                       )),
-                  Expanded(child: Divider()),
+                  const Expanded(child: Divider()),
                 ]),
                 Spacing.medium,
                 OutlinedButton.icon(
@@ -88,14 +92,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 Spacing.medium,
                 RichText(
                   textAlign: TextAlign.center,
-                  text: const TextSpan(children: [
+                  text: TextSpan(children: [
                     TextSpan(
                         text: "Não tem uma conta? ",
-                        style: TextStyle(color: Colors.black38)),
+                        style: Theme.of(context).textTheme.bodyText1),
                     TextSpan(
-                        text: "Registre-se",
-                        style: TextStyle(
-                            color: Colors.indigo, fontWeight: FontWeight.w500)),
+                        text: "Registre-se", style: Theme.of(context).bodyLink),
                   ]),
                 ),
               ]),
